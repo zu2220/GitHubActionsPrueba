@@ -1,0 +1,27 @@
+name: github action for updating clients in clientes.json
+on: push
+  
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+        - name: checkout repository
+          uses: actions/checkout@v4
+
+        - name: set java
+          uses: actions/setup-java@v4
+          with:
+            distribution: 'temurin'
+            java-version: '17'
+
+        - name: run java
+          run: java ./src/main/java/dao/ClientsDAO.java
+
+        - name: auto commit
+          uses: stefanzweifel/git-auto-commit-action@v6
+          with:
+            commit_message: Actualizacion de clientes.json
+            branch: master
+            
